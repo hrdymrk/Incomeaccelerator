@@ -69,14 +69,115 @@
             outline: 2px solid #00ffff;
             outline-offset: 3px;
         }
+        .subheadline {
+            font-size: 1rem;
+            color: #6060a0;
+            margin-top: -15px;
+            margin-bottom: 25px;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+        .countdown-label {
+            font-size: 0.85rem;
+            color: #6060a0;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 10px;
+        }
+        .countdown {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            margin-bottom: 30px;
+        }
+        .countdown-unit {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .countdown-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #00ffff;
+            background: rgba(0,255,255,0.07);
+            border: 1px solid rgba(0,255,255,0.2);
+            border-radius: 6px;
+            width: 64px;
+            line-height: 64px;
+            text-align: center;
+            text-shadow: 0 0 8px rgba(0,255,255,0.4);
+        }
+        .countdown-unit span:last-child {
+            font-size: 0.7rem;
+            color: #6060a0;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-top: 4px;
+        }
     </style>
 </head>
 <body>
     <div class="stars"></div>
     <div class="container">
         <h1>The 10 A.I. Money Machines</h1>
+        <p class="subheadline">Automated Income &bull; Zero Fluff &bull; Built for Speed</p>
         <p>Unlock the Jedi Forge system. Automated digital cash flows built for speed and sovereignty. Step inside the intake room now.</p>
+        <p class="countdown-label">Access closes in</p>
+        <div class="countdown">
+            <div class="countdown-unit">
+                <span class="countdown-number" id="cd-hours">00</span>
+                <span>Hours</span>
+            </div>
+            <div class="countdown-unit">
+                <span class="countdown-number" id="cd-minutes">00</span>
+                <span>Minutes</span>
+            </div>
+            <div class="countdown-unit">
+                <span class="countdown-number" id="cd-seconds">00</span>
+                <span>Seconds</span>
+            </div>
+        </div>
         <a href="#" class="btn">Enter The Forge</a>
     </div>
+    <script>
+        (function () {
+            var DURATION_HOURS = 24;
+            var KEY = 'jediforge_deadline';
+            var deadline = localStorage.getItem(KEY);
+            if (!deadline) {
+                deadline = Date.now() + DURATION_HOURS * 60 * 60 * 1000;
+                localStorage.setItem(KEY, deadline);
+            } else {
+                deadline = parseInt(deadline, 10);
+            }
+
+            function pad(n) { return String(n).padStart(2, '0'); }
+
+            function tick() {
+                var remaining = deadline - Date.now();
+                if (remaining <= 0) {
+                    document.getElementById('cd-hours').textContent = '00';
+                    document.getElementById('cd-minutes').textContent = '00';
+                    document.getElementById('cd-seconds').textContent = '00';
+                    return;
+                }
+                var totalSeconds = Math.floor(remaining / 1000);
+                var hours = Math.floor(totalSeconds / 3600);
+                var minutes = Math.floor((totalSeconds % 3600) / 60);
+                var seconds = totalSeconds % 60;
+                document.getElementById('cd-hours').textContent = pad(hours);
+                document.getElementById('cd-minutes').textContent = pad(minutes);
+                document.getElementById('cd-seconds').textContent = pad(seconds);
+            }
+
+            tick();
+            var timer = setInterval(function () {
+                if (deadline - Date.now() <= 0) {
+                    clearInterval(timer);
+                }
+                tick();
+            }, 1000);
+        }());
+    </script>
 </body>
 </html>
