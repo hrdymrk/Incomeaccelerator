@@ -129,7 +129,7 @@
       margin-bottom: 28px;
     }
 
-    h1 em {
+    h1 em, .gradient-text {
       font-style: normal;
       background: linear-gradient(135deg, var(--accent), var(--gold));
       -webkit-background-clip: text;
@@ -520,7 +520,7 @@
       <div class="feature-card">
         <div class="feature-icon">🤖</div>
         <div class="feature-title">A.I. Revenue Engines</div>
-        <div class="feature-desc">Pre-built automation workflows that monetise traffic, leads, and offers while you sleep.</div>
+        <div class="feature-desc">Pre-built automation workflows that monetize traffic, leads, and offers while you sleep.</div>
       </div>
       <div class="feature-card">
         <div class="feature-icon">⚡</div>
@@ -535,7 +535,7 @@
       <div class="feature-card">
         <div class="feature-icon">🎯</div>
         <div class="feature-title">Precision Targeting</div>
-        <div class="feature-desc">A.I.-driven audience and offer matching that maximises conversion without ad spend guesswork.</div>
+        <div class="feature-desc">A.I.-driven audience and offer matching that maximizes conversion without ad spend guesswork.</div>
       </div>
       <div class="feature-card">
         <div class="feature-icon">🔒</div>
@@ -573,7 +573,7 @@
 
     <!-- Bottom CTA -->
     <div class="bottom-cta" id="forge">
-      <h2>Your A.I. Income Engine<br>Starts <em style="font-style:normal;background:linear-gradient(135deg,#ff6b35,#ffd700);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Right Now</em></h2>
+      <h2>Your A.I. Income Engine<br>Starts <em class="gradient-text">Right Now</em></h2>
       <p>Founding access is strictly limited. Lock in your spot before the timer hits zero.</p>
       <a href="#" class="cta-btn">
         Enter The Forge <span class="cta-arrow">→</span>
@@ -592,7 +592,7 @@
 
     // ── Countdown — persists across page reloads via localStorage ──
     (function () {
-      var DURATION = 23 * 3600 + 59 * 60 + 59; // 24 h window
+      var DURATION = 24 * 3600; // 24-hour window
       var KEY = 'ia_deadline';
 
       var deadline = parseInt(localStorage.getItem(KEY) || '0', 10);
@@ -615,9 +615,11 @@
           hEl.textContent = '00';
           mEl.textContent = '00';
           sEl.textContent = '00';
-          // Reset timer for persistent urgency
-          deadline = Math.floor(Date.now() / 1000) + DURATION;
-          localStorage.setItem(KEY, deadline);
+          // Let the zero state display for one full tick, then reset
+          setTimeout(function () {
+            deadline = Math.floor(Date.now() / 1000) + DURATION;
+            localStorage.setItem(KEY, deadline);
+          }, 1500);
           return;
         }
         var h = Math.floor(remaining / 3600);
