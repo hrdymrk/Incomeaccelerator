@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jedi Forge | 10 A.I. Money Machines</title>
+    <style>
+        body {
+            background-color: #05050a;
+            color: #f0f0f5;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            position: relative;
+        }
+        /* Starfield effect */
+        .stars {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(2px 2px at 20px 30px, #eee, rgba(0,0,0,0)),
+                        radial-gradient(2px 2px at 40px 70px, #fff, rgba(0,0,0,0)),
+                        radial-gradient(1px 1px at 90px 40px, #ddd, rgba(0,0,0,0));
+            background-repeat: repeat;
+            background-size: 200px 200px;
+            opacity: 0.3;
+            z-index: -1;
+        }
+        .container {
+            max-width: 600px;
+            padding: 40px;
+            text-align: center;
+            background: rgba(15, 15, 25, 0.85);
+            border: 1px solid #1f1f3a;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 20px;
+            color: #00ffff;
+            text-shadow: 0 0 10px rgba(0,255,255,0.3);
+        }
+        p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #a0a0c0;
+            margin-bottom: 30px;
+        }
+        .btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #00ffff, #0080ff);
+            color: #05050a;
+            padding: 15px 35px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-decoration: none;
+            border-radius: 6px;
+            box-shadow: 0 0 15px rgba(0,255,255,0.4);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .btn:hover,
+        .btn:focus-visible {
+            transform: translateY(-2px);
+            box-shadow: 0 0 25px rgba(0,255,255,0.7);
+            outline: 2px solid #00ffff;
+            outline-offset: 3px;
+        }
+        .subheadline {
+            font-size: 1rem;
+            color: #6060a0;
+            margin-top: -15px;
+            margin-bottom: 25px;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+        .countdown-label {
+            font-size: 0.85rem;
+            color: #6060a0;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 10px;
+        }
+        .countdown {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            margin-bottom: 30px;
+        }
+        .countdown-unit {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .countdown-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #00ffff;
+            background: rgba(0,255,255,0.07);
+            border: 1px solid rgba(0,255,255,0.2);
+            border-radius: 6px;
+            width: 64px;
+            line-height: 64px;
+            text-align: center;
+            text-shadow: 0 0 8px rgba(0,255,255,0.4);
+        }
+        .countdown-unit span:last-child {
+            font-size: 0.7rem;
+            color: #6060a0;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-top: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="stars"></div>
+    <div class="container">
+        <h1>The 10 A.I. Money Machines</h1>
+        <p class="subheadline">Automated Income &bull; Zero Fluff &bull; Built for Speed</p>
+        <p>Unlock the Jedi Forge system. Automated digital cash flows built for speed and sovereignty. Step inside the intake room now.</p>
+        <p class="countdown-label">Access closes in</p>
+        <div class="countdown">
+            <div class="countdown-unit">
+                <span class="countdown-number" id="cd-hours">00</span>
+                <span>Hours</span>
+            </div>
+            <div class="countdown-unit">
+                <span class="countdown-number" id="cd-minutes">00</span>
+                <span>Minutes</span>
+            </div>
+            <div class="countdown-unit">
+                <span class="countdown-number" id="cd-seconds">00</span>
+                <span>Seconds</span>
+            </div>
+        </div>
+        <a href="#" class="btn">Enter The Forge</a>
+    </div>
+    <script>
+        (function () {
+            var DURATION_HOURS = 24;
+            var KEY = 'jediforge_deadline';
+            var deadline = localStorage.getItem(KEY);
+            if (!deadline) {
+                deadline = Date.now() + DURATION_HOURS * 60 * 60 * 1000;
+                localStorage.setItem(KEY, deadline);
+            } else {
+                deadline = parseInt(deadline, 10);
+            }
+
+            function pad(n) { return String(n).padStart(2, '0'); }
+
+            function tick() {
+                var remaining = deadline - Date.now();
+                if (remaining <= 0) {
+                    document.getElementById('cd-hours').textContent = '00';
+                    document.getElementById('cd-minutes').textContent = '00';
+                    document.getElementById('cd-seconds').textContent = '00';
+                    return;
+                }
+                var totalSeconds = Math.floor(remaining / 1000);
+                var hours = Math.floor(totalSeconds / 3600);
+                var minutes = Math.floor((totalSeconds % 3600) / 60);
+                var seconds = totalSeconds % 60;
+                document.getElementById('cd-hours').textContent = pad(hours);
+                document.getElementById('cd-minutes').textContent = pad(minutes);
+                document.getElementById('cd-seconds').textContent = pad(seconds);
+            }
+
+            tick();
+            var timer = setInterval(function () {
+                if (deadline - Date.now() <= 0) {
+                    clearInterval(timer);
+                }
+                tick();
+            }, 1000);
+        }());
+    </script>
+</body>
+</html>
