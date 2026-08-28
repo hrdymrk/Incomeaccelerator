@@ -181,15 +181,17 @@
             function isAllowedRedirect(url) {
                 try {
                     var parsed = new URL(url, window.location.origin);
-                    var isSameOrigin = parsed.origin === window.location.origin;
-                    var isHttps = parsed.protocol === 'https:';
-                    var isHttpLocalhost = parsed.protocol === 'http:' && (parsed.hostname === 'localhost' || parsed.hostname === '127.0.0.1');
+                    var isHttpProtocol = parsed.protocol === 'https:' || parsed.protocol === 'http:';
 
-                    if (!isSameOrigin && !isHttps && !isHttpLocalhost) {
+                    if (!isHttpProtocol) {
                         return false;
                     }
 
-                    if (CONFIG.allowedRedirectOrigins.length > 0 && CONFIG.allowedRedirectOrigins.indexOf(parsed.origin) === -1) {
+                    if (CONFIG.allowedRedirectOrigins.length === 0) {
+                        return false;
+                    }
+
+                    if (CONFIG.allowedRedirectOrigins.indexOf(parsed.origin) === -1) {
                         return false;
                     }
 
@@ -215,6 +217,8 @@
                 configError = '';
                 if (!CONFIG.githubConnectUrl || !CONFIG.manusConnectUrl || !CONFIG.statusUrl || !CONFIG.approveUrl) {
                     configError = 'Configure OAuth and status endpoints before using this page.';
+                } else if (CONFIG.allowedRedirectOrigins.length === 0) {
+                    configError = 'Configure allowed redirect origins before using this page.';
                 }
             }
 
