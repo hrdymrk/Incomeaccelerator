@@ -187,8 +187,9 @@
                 try {
                     var parsed = new URL(url, window.location.origin);
                     var isHttpsProtocol = parsed.protocol === 'https:';
+                    var isHttpLocalhost = parsed.protocol === 'http:' && (parsed.hostname === 'localhost' || parsed.hostname === '127.0.0.1');
 
-                    if (!isHttpsProtocol) {
+                    if (!isHttpsProtocol && !isHttpLocalhost) {
                         return false;
                     }
 
@@ -208,13 +209,16 @@
 
             function startConnection(url, serviceName) {
                 if (!url) {
-                    status.textContent = serviceName + ' OAuth URL is not configured yet.';
+                    runtimeError = serviceName + ' OAuth URL is not configured yet.';
+                    updateView();
                     return;
                 }
                 if (!isAllowedRedirect(url)) {
-                    status.textContent = serviceName + ' OAuth URL origin is not allowed.';
+                    runtimeError = serviceName + ' OAuth URL origin is not allowed.';
+                    updateView();
                     return;
                 }
+                runtimeError = '';
                 window.location.href = url;
             }
 
@@ -263,13 +267,16 @@
 
             approveBtn.addEventListener('click', function () {
                 if (!CONFIG.approveUrl) {
-                    status.textContent = 'Approve URL is not configured yet.';
+                    runtimeError = 'Approve URL is not configured yet.';
+                    updateView();
                     return;
                 }
                 if (!isAllowedRedirect(CONFIG.approveUrl)) {
-                    status.textContent = 'Approve URL origin is not allowed.';
+                    runtimeError = 'Approve URL origin is not allowed.';
+                    updateView();
                     return;
                 }
+                runtimeError = '';
                 window.location.href = CONFIG.approveUrl;
             });
 
