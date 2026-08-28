@@ -191,7 +191,12 @@
                 }
 
                 fetch(CONFIG.statusUrl, { credentials: 'include' })
-                    .then(function (response) { return response.json(); })
+                    .then(function (response) {
+                        if (!response.ok) {
+                            throw new Error(String(response.status));
+                        }
+                        return response.json();
+                    })
                     .then(function (data) {
                         githubConnected = data.githubConnected === true;
                         manusConnected = data.manusConnected === true;
@@ -221,6 +226,7 @@
 
             validateConfig();
             refreshConnectionState();
+            window.addEventListener('focus', refreshConnectionState);
         }());
     </script>
 </body>
