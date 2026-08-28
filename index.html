@@ -190,7 +190,7 @@
                     return;
                 }
 
-                fetch(CONFIG.statusUrl, { credentials: 'include' })
+                fetch(CONFIG.statusUrl, { credentials: 'same-origin' })
                     .then(function (response) {
                         if (!response.ok) {
                             throw new Error(String(response.status));
@@ -203,8 +203,10 @@
                         updateView();
                     })
                     .catch(function () {
-                        status.textContent = 'Could not load current connection state.';
+                        githubConnected = false;
+                        manusConnected = false;
                         updateView();
+                        status.textContent = 'Could not load current connection state.';
                     });
             }
 
