@@ -160,6 +160,7 @@
             var githubBtn = document.getElementById('connect-github');
             var manusBtn = document.getElementById('connect-manus');
             var configError = '';
+            var runtimeError = '';
 
             function updateView() {
                 githubState.textContent = githubConnected ? 'Connected' : 'Not connected';
@@ -168,6 +169,10 @@
 
                 if (configError) {
                     status.textContent = configError;
+                    return;
+                }
+                if (runtimeError) {
+                    status.textContent = runtimeError;
                     return;
                 }
 
@@ -181,9 +186,9 @@
             function isAllowedRedirect(url) {
                 try {
                     var parsed = new URL(url, window.location.origin);
-                    var isHttpProtocol = parsed.protocol === 'https:' || parsed.protocol === 'http:';
+                    var isHttpsProtocol = parsed.protocol === 'https:';
 
-                    if (!isHttpProtocol) {
+                    if (!isHttpsProtocol) {
                         return false;
                     }
 
@@ -235,15 +240,16 @@
                         return response.json();
                     })
                     .then(function (data) {
+                        runtimeError = '';
                         githubConnected = data.githubConnected === true;
                         manusConnected = data.manusConnected === true;
                         updateView();
                     })
                     .catch(function () {
+                        runtimeError = 'Could not load current connection state.';
                         githubConnected = false;
                         manusConnected = false;
                         updateView();
-                        status.textContent = 'Could not load current connection state.';
                     });
             }
 
