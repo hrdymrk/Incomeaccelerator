@@ -145,12 +145,12 @@
             var CONFIG = {
                 githubConnectUrl: '',
                 manusConnectUrl: '',
+                statusUrl: '',
                 approveUrl: ''
             };
 
-            var params = new URLSearchParams(window.location.search);
-            var githubConnected = params.get('github') === 'connected';
-            var manusConnected = params.get('manus') === 'connected';
+            var githubConnected = false;
+            var manusConnected = false;
 
             var githubState = document.getElementById('github-state');
             var manusState = document.getElementById('manus-state');
@@ -179,6 +179,30 @@
                 window.location.href = url;
             }
 
+            function validateConfig() {
+                if (!CONFIG.githubConnectUrl || !CONFIG.manusConnectUrl || !CONFIG.statusUrl || !CONFIG.approveUrl) {
+                    status.textContent = 'Configure OAuth and status endpoints before using this page.';
+                }
+            }
+
+            function refreshConnectionState() {
+                if (!CONFIG.statusUrl) {
+                    return;
+                }
+
+                fetch(CONFIG.statusUrl, { credentials: 'include' })
+                    .then(function (response) { return response.json(); })
+                    .then(function (data) {
+                        githubConnected = data.githubConnected === true;
+                        manusConnected = data.manusConnected === true;
+                        updateView();
+                    })
+                    .catch(function () {
+                        status.textContent = 'Could not load current connection state.';
+                        updateView();
+                    });
+            }
+
             githubBtn.addEventListener('click', function () {
                 startConnection(CONFIG.githubConnectUrl, 'GitHub');
             });
@@ -195,7 +219,8 @@
                 window.location.href = CONFIG.approveUrl;
             });
 
-            updateView();
+            validateConfig();
+            refreshConnectionState();
         }());
     </script>
 </body>
