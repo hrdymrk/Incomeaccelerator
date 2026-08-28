@@ -115,7 +115,7 @@
 <body>
     <main class="card">
         <h1>Connect GitHub and Manus</h1>
-        <p>Use this screen to connect both accounts, then approve the connection in one step.</p>
+        <p>Use this screen to start both sign-ins, then approve once both services return as connected.</p>
 
         <section class="services" aria-label="Connection services">
             <article class="service">
@@ -137,13 +137,20 @@
 
         <button type="button" id="approve-btn" disabled>Approve Connection</button>
         <p class="status" id="status">Connect both services to continue.</p>
-        <p class="muted">Note: Replace each connect action with your real OAuth/login flow endpoints.</p>
+        <p class="muted">Set your OAuth URLs in the script config before production use.</p>
     </main>
 
     <script>
         (function () {
-            var githubConnected = false;
-            var manusConnected = false;
+            var CONFIG = {
+                githubConnectUrl: '',
+                manusConnectUrl: '',
+                approveUrl: ''
+            };
+
+            var params = new URLSearchParams(window.location.search);
+            var githubConnected = params.get('github') === 'connected';
+            var manusConnected = params.get('manus') === 'connected';
 
             var githubState = document.getElementById('github-state');
             var manusState = document.getElementById('manus-state');
@@ -164,18 +171,28 @@
                 }
             }
 
+            function startConnection(url, serviceName) {
+                if (!url) {
+                    status.textContent = serviceName + ' OAuth URL is not configured yet.';
+                    return;
+                }
+                window.location.href = url;
+            }
+
             githubBtn.addEventListener('click', function () {
-                githubConnected = true;
-                updateView();
+                startConnection(CONFIG.githubConnectUrl, 'GitHub');
             });
 
             manusBtn.addEventListener('click', function () {
-                manusConnected = true;
-                updateView();
+                startConnection(CONFIG.manusConnectUrl, 'Manus');
             });
 
             approveBtn.addEventListener('click', function () {
-                status.textContent = 'Connection approved. GitHub and Manus are now linked.';
+                if (!CONFIG.approveUrl) {
+                    status.textContent = 'Approve URL is not configured yet.';
+                    return;
+                }
+                window.location.href = CONFIG.approveUrl;
             });
 
             updateView();
