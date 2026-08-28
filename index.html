@@ -146,7 +146,8 @@
                 githubConnectUrl: '',
                 manusConnectUrl: '',
                 statusUrl: '',
-                approveUrl: ''
+                approveUrl: '',
+                allowedRedirectOrigins: [window.location.origin]
             };
 
             var githubConnected = false;
@@ -158,11 +159,17 @@
             var approveBtn = document.getElementById('approve-btn');
             var githubBtn = document.getElementById('connect-github');
             var manusBtn = document.getElementById('connect-manus');
+            var configError = '';
 
             function updateView() {
                 githubState.textContent = githubConnected ? 'Connected' : 'Not connected';
                 manusState.textContent = manusConnected ? 'Connected' : 'Not connected';
                 approveBtn.disabled = !(githubConnected && manusConnected);
+
+                if (configError) {
+                    status.textContent = configError;
+                    return;
+                }
 
                 if (githubConnected && manusConnected) {
                     status.textContent = 'Both connected. Press "Approve Connection".';
@@ -171,17 +178,43 @@
                 }
             }
 
+            function isAllowedRedirect(url) {
+                try {
+                    var parsed = new URL(url, window.location.origin);
+                    var isSameOrigin = parsed.origin === window.location.origin;
+                    var isHttps = parsed.protocol === 'https:';
+                    var isHttpLocalhost = parsed.protocol === 'http:' && (parsed.hostname === 'localhost' || parsed.hostname === '127.0.0.1');
+
+                    if (!isSameOrigin && !isHttps && !isHttpLocalhost) {
+                        return false;
+                    }
+
+                    if (CONFIG.allowedRedirectOrigins.length > 0 && CONFIG.allowedRedirectOrigins.indexOf(parsed.origin) === -1) {
+                        return false;
+                    }
+
+                    return true;
+                } catch (e) {
+                    return false;
+                }
+            }
+
             function startConnection(url, serviceName) {
                 if (!url) {
                     status.textContent = serviceName + ' OAuth URL is not configured yet.';
+                    return;
+                }
+                if (!isAllowedRedirect(url)) {
+                    status.textContent = serviceName + ' OAuth URL origin is not allowed.';
                     return;
                 }
                 window.location.href = url;
             }
 
             function validateConfig() {
+                configError = '';
                 if (!CONFIG.githubConnectUrl || !CONFIG.manusConnectUrl || !CONFIG.statusUrl || !CONFIG.approveUrl) {
-                    status.textContent = 'Configure OAuth and status endpoints before using this page.';
+                    configError = 'Configure OAuth and status endpoints before using this page.';
                 }
             }
 
@@ -223,10 +256,15 @@
                     status.textContent = 'Approve URL is not configured yet.';
                     return;
                 }
+                if (!isAllowedRedirect(CONFIG.approveUrl)) {
+                    status.textContent = 'Approve URL origin is not allowed.';
+                    return;
+                }
                 window.location.href = CONFIG.approveUrl;
             });
 
             validateConfig();
+            updateView();
             refreshConnectionState();
             window.addEventListener('focus', refreshConnectionState);
         }());
