@@ -74,6 +74,17 @@
             flex-direction: column;
             gap: 12px;
         }
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
         .subheadline {
             font-size: 1rem;
             color: #6060a0;
@@ -143,9 +154,12 @@
             </div>
         </div>
         <div class="repo-links">
-            <a href="https://github.com/hrdymrk/Incomeaccelerator" class="btn" target="_blank" rel="noopener noreferrer">Income Accelerator on GitHub (opens in a new tab)</a>
-            <a href="https://github.com/hrdymrk/forge-your-empire" class="btn" target="_blank" rel="noopener noreferrer">Forge Your Empire on GitHub (opens in a new tab)</a>
-            <a href="https://github.com/hrdymrk/affiliatepulse" class="btn" target="_blank" rel="noopener noreferrer">AffiliatePulse on GitHub (opens in a new tab)</a>
+            <a href="https://github.com/hrdymrk/Incomeaccelerator" class="btn" target="_blank" rel="noopener noreferrer" aria-describedby="repo-link-incomeaccelerator">Income Accelerator on GitHub</a>
+            <span id="repo-link-incomeaccelerator" class="sr-only">Opens in a new tab.</span>
+            <a href="https://github.com/hrdymrk/forge-your-empire" class="btn" target="_blank" rel="noopener noreferrer" aria-describedby="repo-link-forge-your-empire">Forge Your Empire on GitHub</a>
+            <span id="repo-link-forge-your-empire" class="sr-only">Opens in a new tab.</span>
+            <a href="https://github.com/hrdymrk/affiliatepulse" class="btn" target="_blank" rel="noopener noreferrer" aria-describedby="repo-link-affiliatepulse">AffiliatePulse on GitHub</a>
+            <span id="repo-link-affiliatepulse" class="sr-only">Opens in a new tab.</span>
         </div>
     </div>
     <script>
