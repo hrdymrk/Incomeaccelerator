@@ -1,0 +1,21 @@
+{
+  "name": "incomeaccelerator",
+  "version": "1.0.0",
+  "description": "Income Accelerator product listing automation",
+  "scripts": {
+    "validate-product": "node scripts/list-explodely.mjs --dry-run",
+    "list-explodely": "node scripts/list-explodely.mjs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "http://localhost:26831/hrdymrk/Incomeaccelerator"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "private": true,
+  "devDependencies": {
+    "playwright": "^1.63.0"
+  }
+}

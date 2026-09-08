@@ -1,0 +1,16 @@
+{
+  "productName": "Income Accelerator™",
+  "price": "47.00",
+  "currency": "USD",
+  "affiliateCommissionPercent": 50,
+  "funnelName": "Income Accelerator funnel",
+  "offerSummary": "Master Accelerator + 1,000 Opportunity Seeker Leads",
+  "bonusHeadline": "Includes 1,000 Opportunity Seeker Leads",
+  "description": "Unlock the Income Accelerator system with instant access to the master accelerator plus 1,000 Opportunity Seeker Leads as your bonus.",
+  "deliveryUrl": "https://accelerator.justinpresleycash.biz/income-accelerator-access.html",
+  "portal": {
+    "baseUrl": "https://explodely.com",
+    "loginPath": "/seller/signin",
+    "productsPath": "/seller/products"
+  }
+}
