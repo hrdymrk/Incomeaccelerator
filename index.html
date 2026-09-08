@@ -3,21 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jedi Forge | 10 A.I. Money Machines</title>
+    <title>Income Accelerator | AI Prompt Builder</title>
     <style>
         body {
             background-color: #05050a;
             color: #f0f0f5;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            padding: 24px;
             min-height: 100vh;
             position: relative;
         }
-        /* Starfield effect */
         .stars {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -30,37 +26,41 @@
             z-index: -1;
         }
         .container {
-            max-width: 600px;
+            max-width: 860px;
+            margin: 0 auto;
             padding: 40px;
-            text-align: center;
             background: rgba(15, 15, 25, 0.85);
             border: 1px solid #1f1f3a;
             border-radius: 12px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            backdrop-filter: blur(2px);
         }
         h1 {
             font-size: 2.2rem;
             margin-bottom: 20px;
             color: #00ffff;
             text-shadow: 0 0 10px rgba(0,255,255,0.3);
+            text-align: center;
         }
         p {
             font-size: 1.1rem;
             line-height: 1.6;
             color: #a0a0c0;
-            margin-bottom: 30px;
+            margin: 0 0 16px;
         }
         .btn {
             display: inline-block;
             background: linear-gradient(135deg, #00ffff, #0080ff);
             color: #05050a;
-            padding: 15px 35px;
-            font-size: 1.2rem;
+            padding: 12px 24px;
+            font-size: 1rem;
             font-weight: bold;
             text-decoration: none;
             border-radius: 6px;
             box-shadow: 0 0 15px rgba(0,255,255,0.4);
             transition: transform 0.2s, box-shadow 0.2s;
+            border: 0;
+            cursor: pointer;
         }
         .btn:hover,
         .btn:focus-visible {
@@ -72,111 +72,157 @@
         .subheadline {
             font-size: 1rem;
             color: #6060a0;
-            margin-top: -15px;
-            margin-bottom: 25px;
+            margin-top: -8px;
+            margin-bottom: 18px;
             letter-spacing: 0.05em;
             text-transform: uppercase;
-        }
-        .countdown-label {
-            font-size: 0.85rem;
-            color: #6060a0;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            margin-bottom: 10px;
-        }
-        .countdown {
-            display: flex;
-            justify-content: center;
-            gap: 16px;
-            margin-bottom: 30px;
-        }
-        .countdown-unit {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        .countdown-number {
-            font-size: 2rem;
-            font-weight: bold;
-            color: #00ffff;
-            background: rgba(0,255,255,0.07);
-            border: 1px solid rgba(0,255,255,0.2);
-            border-radius: 6px;
-            width: 64px;
-            line-height: 64px;
             text-align: center;
-            text-shadow: 0 0 8px rgba(0,255,255,0.4);
         }
-        .countdown-unit span:last-child {
-            font-size: 0.7rem;
-            color: #6060a0;
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
+        .hero-copy {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+        .panel {
+            background: rgba(7, 7, 15, 0.7);
+            border: 1px solid #1f1f3a;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 18px;
+        }
+        .panel h2 {
+            margin-top: 0;
+            color: #9fe9ff;
+            font-size: 1.15rem;
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+            color: #d0d0f0;
+            font-weight: 600;
+        }
+        textarea {
+            width: 100%;
+            min-height: 110px;
+            border-radius: 8px;
+            border: 1px solid #2c2c4f;
+            background: #090916;
+            color: #f0f0f5;
+            padding: 12px;
+            font-size: 0.98rem;
+            resize: vertical;
+            margin-bottom: 12px;
+        }
+        .output {
+            white-space: pre-wrap;
+            background: #090916;
+            border: 1px solid #2c2c4f;
+            border-radius: 8px;
+            padding: 12px;
+            color: #d9fffb;
+            min-height: 90px;
+        }
+        .resource-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 12px;
+        }
+        .resource-card {
+            background: #090916;
+            border: 1px solid #2c2c4f;
+            border-radius: 8px;
+            padding: 14px;
+        }
+        .resource-card strong {
+            color: #9fe9ff;
+            display: block;
+            margin-bottom: 8px;
+        }
+        .kpi {
+            margin: 0;
+            color: #00ffff;
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+        .kpi-note {
             margin-top: 4px;
+            color: #9090b8;
+            font-size: 0.95rem;
         }
     </style>
 </head>
 <body>
     <div class="stars"></div>
     <div class="container">
-        <h1>The 10 A.I. Money Machines</h1>
-        <p class="subheadline">Automated Income &bull; Zero Fluff &bull; Built for Speed</p>
-        <p>Unlock the Jedi Forge system. Automated digital cash flows built for speed and sovereignty. Step inside the intake room now.</p>
-        <p class="countdown-label">Access closes in</p>
-        <div class="countdown">
-            <div class="countdown-unit">
-                <span class="countdown-number" id="cd-hours">00</span>
-                <span>Hours</span>
+        <h1>Income Accelerator</h1>
+        <p class="subheadline">AI Prompt System &bull; Tutorials &bull; Verified Buyer Leads</p>
+        <p class="hero-copy">Tell the AI what you want to build, and Income Accelerator creates a build-ready prompt you can use immediately.</p>
+
+        <section class="panel" aria-labelledby="prompt-builder-title">
+            <h2 id="prompt-builder-title">Build Prompt Generator</h2>
+            <label for="build-request">What do you want to build?</label>
+            <textarea id="build-request" placeholder="Example: A web app that helps local gyms manage memberships and payments."></textarea>
+            <button type="button" class="btn" id="generate-prompt">Generate Prompt</button>
+            <h3>Generated Prompt</h3>
+            <div class="output" id="prompt-output">Your generated build prompt will appear here.</div>
+        </section>
+
+        <section class="panel" aria-labelledby="resources-title">
+            <h2 id="resources-title">Tutorials & Resources</h2>
+            <div class="resource-grid">
+                <article class="resource-card">
+                    <strong>Quickstart Tutorials</strong>
+                    <p>Step-by-step guides for turning your product idea into a launch-ready build plan.</p>
+                </article>
+                <article class="resource-card">
+                    <strong>Prompt Templates</strong>
+                    <p>Reusable prompt frameworks for SaaS, automation tools, landing pages, and digital products.</p>
+                </article>
+                <article class="resource-card">
+                    <strong>Launch Resources</strong>
+                    <p>Simple checklists for validating, shipping, and monetizing what your AI workflow creates.</p>
+                </article>
             </div>
-            <div class="countdown-unit">
-                <span class="countdown-number" id="cd-minutes">00</span>
-                <span>Minutes</span>
-            </div>
-            <div class="countdown-unit">
-                <span class="countdown-number" id="cd-seconds">00</span>
-                <span>Seconds</span>
-            </div>
+        </section>
+
+        <section class="panel" aria-labelledby="leads-title">
+            <h2 id="leads-title">Curated Buyer Leads</h2>
+            <p class="kpi">1,000</p>
+            <p class="kpi-note">Curated and verified buyer leads included to help you find paying customers faster.</p>
+        </section>
+
+        <div style="text-align:center;">
+            <a href="#" class="btn">Start Building</a>
         </div>
-        <a href="#" class="btn">Enter The Forge</a>
     </div>
     <script>
-        (function () {
-            var DURATION_HOURS = 24;
-            var KEY = 'jediforge_deadline';
-            var deadline = localStorage.getItem(KEY);
-            if (!deadline) {
-                deadline = Date.now() + DURATION_HOURS * 60 * 60 * 1000;
-                localStorage.setItem(KEY, deadline);
-            } else {
-                deadline = parseInt(deadline, 10);
+        (function() {
+            var requestInput = document.getElementById('build-request');
+            var output = document.getElementById('prompt-output');
+            var generateButton = document.getElementById('generate-prompt');
+
+            function buildPrompt(userRequest) {
+                return (
+                    'You are a senior AI product builder. Create a complete implementation plan and first build draft for this request: "' +
+                    userRequest +
+                    '".\n\n' +
+                    'Return:\n' +
+                    '1) Product summary\n' +
+                    '2) Core features (MVP first)\n' +
+                    '3) Recommended tech stack\n' +
+                    '4) Build steps in order\n' +
+                    '5) Monetization approach\n' +
+                    '6) 7-day launch checklist'
+                );
             }
 
-            function pad(n) { return String(n).padStart(2, '0'); }
-
-            function tick() {
-                var remaining = deadline - Date.now();
-                if (remaining <= 0) {
-                    document.getElementById('cd-hours').textContent = '00';
-                    document.getElementById('cd-minutes').textContent = '00';
-                    document.getElementById('cd-seconds').textContent = '00';
+            generateButton.addEventListener('click', function() {
+                var userRequest = requestInput.value.trim();
+                if (!userRequest) {
+                    output.textContent = 'Please describe what you want to build first.';
                     return;
                 }
-                var totalSeconds = Math.floor(remaining / 1000);
-                var hours = Math.floor(totalSeconds / 3600);
-                var minutes = Math.floor((totalSeconds % 3600) / 60);
-                var seconds = totalSeconds % 60;
-                document.getElementById('cd-hours').textContent = pad(hours);
-                document.getElementById('cd-minutes').textContent = pad(minutes);
-                document.getElementById('cd-seconds').textContent = pad(seconds);
-            }
-
-            tick();
-            var timer = setInterval(function () {
-                if (deadline - Date.now() <= 0) {
-                    clearInterval(timer);
-                }
-                tick();
-            }, 1000);
+                output.textContent = buildPrompt(userRequest);
+            });
         }());
     </script>
 </body>
